@@ -1,26 +1,1864 @@
+
 @import "tailwindcss";
 
+/* ==========================================
+   HALUVAGILU CUP - CINEMATIC DESIGN SYSTEM
+========================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cyan: #48f5ff;
+  --cyan-dark: #00a6dd;
+  --black: #02070d;
+  --surface: #071620;
+  --muted: #8a9dac;
+  --white: #f4fbff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--cyan);
+  color: var(--black);
+}
+
+.hvl-site {
+  min-height: 100vh;
+  overflow: clip;
+  background: var(--black);
+}
+
+.hvl-site a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hvl-site a:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 5px;
+}
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.hvl-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: 100%;
+  min-height: 90px;
+  padding: 20px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid rgba(72, 245, 255, 0.12);
+  background: rgba(2, 7, 13, 0.45);
+  backdrop-filter: blur(20px);
+}
+
+.hvl-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1.1;
+}
+
+.hvl-brand-symbol {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  color: #001317;
+  background: var(--cyan);
+  font-size: 27px;
+  box-shadow: 0 0 25px rgba(72, 245, 255, 0.35);
+  clip-path: polygon(
+    15% 0, 85% 0, 100% 50%,
+    85% 100%, 15% 100%, 0 50%
+  );
+}
+
+.hvl-brand small {
+  display: block;
+  margin-top: 6px;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--cyan);
+}
+
+.hvl-links {
+  display: flex;
+  gap: 38px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.hvl-links a {
+  color: #afc3cc;
+  transition: color 0.3s ease;
+}
+
+.hvl-links a:hover {
+  color: var(--cyan);
+}
+
+.hvl-nav-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 13px 21px;
+  border: 1px solid rgba(72, 245, 255, 0.65);
+  color: var(--cyan) !important;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  transition: 0.3s ease;
+}
+
+.hvl-nav-button:hover {
+  background: var(--cyan);
+  color: #000 !important;
+  box-shadow: 0 0 30px rgba(72, 245, 255, 0.35);
+}
+
+/* ==========================================
+   CINEMATIC HERO
+========================================== */
+
+.hvl-hero-v2 {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 45%,
+      rgba(0, 160, 190, 0.12),
+      transparent 65%
+    ),
+    #02070d;
+}
+
+.hvl-stadium-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(2, 7, 13, 0.35) 0%,
+      rgba(2, 7, 13, 0.48) 45%,
+      rgba(2, 7, 13, 0.9) 85%,
+      #02070d 100%
+    ),
+    url("/images/hero/banner.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Moving futuristic grid */
+
+.hvl-grid-bg {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  opacity: 0.3;
+  background-image:
+    linear-gradient(
+      rgba(72, 245, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(72, 245, 255, 0.08) 1px,
+      transparent 1px
+    );
+  background-size: 65px 65px;
+  mask-image: linear-gradient(
+    transparent,
+    black 45%,
+    transparent
+  );
+  animation: hvlGridMove 18s linear infinite;
+}
+
+/* Animated spotlights */
+
+.hvl-light {
+  position: absolute;
+  top: -35%;
+  width: 30vw;
+  height: 95vh;
+  pointer-events: none;
+  opacity: 0.3;
+  filter: blur(65px);
+  background: linear-gradient(
+    180deg,
+    rgba(72, 245, 255, 0.45),
+    transparent 80%
+  );
+  animation: hvlBeam 7s ease-in-out infinite alternate;
+}
+
+.hvl-light-one {
+  left: 2%;
+  transform: rotate(-28deg);
+}
+
+.hvl-light-two {
+  right: 2%;
+  transform: rotate(28deg);
+  animation-delay: -3s;
+}
+
+/* Floating background lights */
+
+.hvl-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  animation: hvlPulse 7s ease-in-out infinite alternate;
+}
+
+.hvl-orb-one {
+  width: 350px;
+  height: 350px;
+  left: -200px;
+  top: 20%;
+  background: rgba(0, 190, 230, 0.16);
+}
+
+.hvl-orb-two {
+  width: 400px;
+  height: 400px;
+  right: -200px;
+  bottom: 5%;
+  background: rgba(0, 115, 210, 0.13);
+  animation-delay: -3s;
+}
+
+.hvl-hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1250px;
+  padding: 155px 25px 100px;
+  text-align: center;
+}
+
+.hvl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  animation: hvlReveal 0.8s ease both;
+}
+
+.hvl-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 15px var(--cyan);
+  animation: hvlPulse 1.5s infinite alternate;
+}
+
+.hvl-eyebrow-line {
+  width: 38px;
+  height: 1px;
+  background: var(--cyan);
+}
+
+/* ==========================================
+   FLOATING TROPHY AND ROTATING RINGS
+========================================== */
+
+.hvl-trophy-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 220px;
+  height: 220px;
+  margin: 25px auto 15px;
+}
+
+.hvl-stage-glow {
+  position: absolute;
+  inset: 40px;
+  border-radius: 50%;
+  background: rgba(0, 230, 255, 0.18);
+  filter: blur(42px);
+  animation: hvlPulse 3s infinite alternate;
+}
+
+.hvl-ring {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.hvl-ring-outer {
+  inset: 4px;
+  border: 1px dashed rgba(72, 245, 255, 0.48);
+  animation: hvlRotate 25s linear infinite;
+}
+
+.hvl-ring-inner {
+  inset: 24px;
+  border: 2px solid transparent;
+  border-top-color: var(--cyan);
+  border-bottom-color: rgba(72, 245, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.08);
+  animation: hvlRotate 9s linear infinite reverse;
+}
+
+.hvl-floating-cup {
+  position: relative;
+  filter: drop-shadow(
+    0 0 28px rgba(0, 240, 255, 0.5)
+  );
+  animation: hvlFloat 4s ease-in-out infinite;
+}
+
+/* ==========================================
+   HERO TYPOGRAPHY
+========================================== */
+
+.hvl-pretitle {
+  color: #9fbac5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  animation: hvlReveal 0.8s 0.1s both;
+}
+
+.hvl-hero-titles h1 {
+  margin: 18px 0 0;
+  font-size: clamp(42px, 8.5vw, 132px);
+  font-weight: 1000;
+  letter-spacing: -0.065em;
+  line-height: 0.97;
+  text-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+  animation: hvlReveal 0.9s 0.2s both;
+}
+
+.hvl-title-cup {
+  display: block;
+  font-size: clamp(90px, 17vw, 260px);
+  letter-spacing: -0.09em;
+  line-height: 0.91;
+
+  background: linear-gradient(
+    115deg,
+    #007b99 4%,
+    #50f5ff 30%,
+    #e0ffff 48%,
+    #00c3ea 70%,
+    #178ca9 100%
+  );
+  background-size: 220% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: hvlShine 6s linear infinite;
+}
+
+.hvl-title-dot {
+  -webkit-text-fill-color: var(--cyan);
+}
+
+.hvl-hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 22px auto;
+}
+
+.hvl-hero-divider span {
+  width: min(65px, 10vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cyan)
+  );
+}
+
+.hvl-hero-divider span:last-child {
+  transform: rotate(180deg);
+}
+
+.hvl-hero-divider b {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--cyan);
+}
+
+.hvl-hero-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #a1b4c2;
+  line-height: 1.9;
+  font-size: 15px;
+}
+
+.hvl-hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 35px;
+}
+
+.hvl-primary-button,
+.hvl-secondary-button {
+  min-height: 53px;
+  padding: 17px 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.hvl-primary-button {
+  color: #00151a !important;
+  background: var(--cyan);
+  box-shadow: 0 0 40px rgba(0, 225, 255, 0.22);
+}
+
+.hvl-primary-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 50px rgba(0, 225, 255, 0.5);
+}
+
+.hvl-secondary-button {
+  border: 1px solid rgba(72, 245, 255, 0.25);
+  color: #d7ecf2;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.hvl-secondary-button:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ==========================================
+   ANIMATED STATISTICS
+========================================== */
+
+.hvl-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 750px;
+  margin: 70px auto 0;
+  border: 1px solid rgba(72, 245, 255, 0.15);
+  background: rgba(4, 20, 28, 0.55);
+  backdrop-filter: blur(18px);
+}
+
+.hvl-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 23px 12px;
+}
+
+.hvl-stat + .hvl-stat {
+  border-left: 1px solid rgba(72, 245, 255, 0.13);
+}
+
+.hvl-stat strong {
+  color: var(--cyan);
+  font-size: clamp(28px, 4vw, 45px);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 0 25px rgba(72, 245, 255, 0.22);
+}
+
+.hvl-stat span {
+  color: #93aebb;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+.hvl-scroll-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #809aa5;
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.hvl-scroll-line {
+  height: 32px;
+  width: 1px;
+  background: var(--cyan);
+  animation: hvlPulse 1.5s infinite alternate;
+}
+
+/* ==========================================
+   MOVING CHAMPIONSHIP TICKER
+========================================== */
+
+.hvl-ticker {
+  overflow: hidden;
+  padding: 18px 0;
+  background: var(--cyan);
+  color: #00151a;
+}
+
+.hvl-ticker-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: hvlTicker 38s linear infinite;
+}
+
+.hvl-ticker-track > span {
+  padding-right: 30px;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.hvl-ticker b {
+  padding: 0 20px;
+}
+
+/* ==========================================
+   LEGACY SECTION
+========================================== */
+
+.hvl-legacy-section,
+.hvl-seasons-section {
+  max-width: 1400px;
+  margin: auto;
+  padding: 110px 6%;
+  scroll-margin-top: 20px;
+}
+
+.hvl-section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.hvl-section-tag span {
+  width: 7px;
+  height: 7px;
+  background: var(--cyan);
+  transform: rotate(45deg);
+}
+
+.hvl-section-title {
+  margin-top: 23px;
+  font-size: clamp(36px, 6vw, 78px);
+  line-height: 1.03;
+  font-weight: 1000;
+  letter-spacing: -0.05em;
+}
+
+.hvl-section-title > span {
+  display: block;
+  color: var(--cyan);
+}
+
+.hvl-section-copy {
+  max-width: 650px;
+  margin-top: 25px;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+
+.hvl-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 65px;
+}
+
+.hvl-feature {
+  position: relative;
+  min-height: 200px;
+  padding: 35px 30px;
+  border: 1px solid rgba(72, 245, 255, 0.12);
+  background: linear-gradient(145deg, #081924, #030a10);
+  transition: 0.35s ease;
+}
+
+.hvl-feature:hover {
+  transform: translateY(-7px);
+  border-color: rgba(72, 245, 255, 0.55);
+  box-shadow: 0 20px 50px rgba(0, 160, 190, 0.1);
+}
+
+.hvl-feature > span {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.hvl-feature strong {
+  display: block;
+  margin: 25px 0 12px;
+  font-size: 18px;
+}
+
+.hvl-feature p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   SEASONS SECTION
+========================================== */
+
+.hvl-seasons-section {
+  max-width: none;
+  background:
+    radial-gradient(
+      ellipse at 50% 20%,
+      rgba(0, 166, 221, 0.07),
+      transparent 55%
+    ),
+    #030b12;
+}
+
+.hvl-seasons-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 35px;
+  max-width: 1230px;
+  margin: 0 auto 45px;
+}
+
+.hvl-seasons-heading > p {
+  max-width: 260px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.hvl-season-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 1230px;
+  margin: 0 auto;
+}
+
+/* Neon season cards */
+
+.hvl-season-card-v2 {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 410px;
+  overflow: hidden;
+  padding: 27px;
+  border: 1px solid rgba(72, 245, 255, 0.16);
+  background-color: #071620;
+  background-size: cover;
+  background-position: center;
+  transition:
+    transform 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.hvl-season-card-v2::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    transparent 20%,
+    rgba(72, 245, 255, 0.12) 50%,
+    transparent 80%
+  );
+  transform: translateX(-150%);
+  transition: transform 0.8s ease;
+}
+
+.hvl-season-card-v2:hover {
+  transform: translateY(-9px);
+  border-color: var(--cyan);
+  box-shadow: 0 22px 65px rgba(0, 210, 240, 0.13);
+}
+
+.hvl-season-card-v2:hover::after {
+  transform: translateX(150%);
+}
+
+.hvl-card-top,
+.hvl-card-bottom,
+.hvl-card-watermark {
+  position: relative;
+  z-index: 2;
+}
+
+.hvl-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hvl-card-code {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #d7eaf2;
+}
+
+.hvl-status {
+  padding: 7px 10px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.hvl-done {
+  border: 1px solid rgba(72, 245, 255, 0.35);
+  background: rgba(2, 15, 22, 0.75);
+  color: var(--cyan);
+}
+
+.hvl-soon {
+  background: var(--cyan);
+  color: #041217;
+}
+
+.hvl-card-watermark {
+  position: absolute;
+  right: 10px;
+  top: 80px;
+  font-size: clamp(110px, 17vw, 190px);
+  line-height: 1;
+  font-weight: 1000;
+  color: rgba(113, 238, 255, 0.1);
+  letter-spacing: -0.12em;
+}
+
+.hvl-card-bottom > p {
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.hvl-card-bottom h3 {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+  font-size: 31px;
+  line-height: 1.1;
+  font-weight: 900;
+}
+
+.hvl-card-bottom h3 span {
+  font-size: 72px;
+  color: #fff;
+}
+
+.hvl-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 23px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: #b3c9d2;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.hvl-card-arrow {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  flex-shrink: 0;
+  border: 1px solid rgba(72, 245, 255, 0.4);
+  color: var(--cyan);
+  font-size: 18px;
+}
+
+.hvl-season-upcoming {
+  border-style: dashed;
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(0, 220, 255, 0.14),
+      transparent 55%
+    ),
+    #030d15;
+}
+
+.hvl-season-upcoming .hvl-card-watermark {
+  opacity: 0.7;
+}
+
+/* ==========================================
+   SEASON 7 - COMING SOON
+========================================== */
+
+.hvl-next-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 460px;
+  overflow: hidden;
+  padding: 100px 20px;
+  text-align: center;
+  border-top: 1px solid rgba(72, 245, 255, 0.13);
+  border-bottom: 1px solid rgba(72, 245, 255, 0.13);
+  background: #02070d;
+}
+
+.hvl-next-glow {
+  position: absolute;
+  width: min(500px, 90vw);
+  height: 300px;
+  top: 20%;
+  background: rgba(0, 210, 240, 0.13);
+  filter: blur(95px);
+  pointer-events: none;
+}
+
+.hvl-next-section > *:not(.hvl-next-glow) {
+  position: relative;
+}
+
+.hvl-next-section > p {
+  margin-top: 40px;
+  color: #a4b8c3;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+.hvl-next-section h2 {
+  margin: 15px 0;
+  font-size: clamp(65px, 13vw, 170px);
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -0.08em;
+}
+
+.hvl-next-section h2 span {
+  color: var(--cyan);
+  text-shadow: 0 0 60px rgba(0, 230, 255, 0.35);
+}
+
+.hvl-next-section > strong {
+  color: #d5eff4;
+  font-size: 13px;
+  letter-spacing: 4px;
+}
+
+.hvl-next-line {
+  width: 80px;
+  height: 2px;
+  margin: 35px auto 20px;
+  background: var(--cyan);
+  box-shadow: 0 0 20px var(--cyan);
+}
+
+.hvl-next-footnote {
+  color: #7c96a4;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.hvl-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 42px 6%;
+  background: #02070d;
+}
+
+.hvl-footer-brand {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.hvl-footer-brand span {
+  color: var(--cyan);
+}
+
+.hvl-footer p,
+.hvl-footer small {
+  color: #78909e;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+/* ==========================================
+   CINEMATIC ANIMATIONS
+========================================== */
+
+@keyframes hvlFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes hvlRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hvlPulse {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hvlBeam {
+  from {
+    opacity: 0.12;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+@keyframes hvlGridMove {
+  to {
+    background-position: 0 65px, 65px 0;
+  }
+}
+
+@keyframes hvlReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hvlShine {
+  to {
+    background-position: 220% center;
+  }
+}
+
+@keyframes hvlTicker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================
+   TABLET RESPONSIVENESS
+========================================== */
+
+@media (max-width: 950px) {
+  .hvl-links {
+    display: none;
+  }
+
+  .hvl-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hvl-season-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hvl-footer {
+    flex-wrap: wrap;
+  }
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS
+========================================== */
+
+@media (max-width: 600px) {
+  .hvl-nav {
+    padding: 17px 5%;
+    min-height: 75px;
+  }
+
+  .hvl-brand {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .hvl-brand small {
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .hvl-brand-symbol {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+  }
+
+  .hvl-nav-button {
+    padding: 10px;
+    font-size: 9px;
+    gap: 5px;
+  }
+
+  .hvl-hero-content {
+    padding: 115px 16px 95px;
+  }
+
+  .hvl-eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+
+  .hvl-trophy-stage {
+    width: 175px;
+    height: 175px;
+    margin-top: 24px;
+  }
+
+  .hvl-floating-cup svg {
+    width: 105px;
+    height: 115px;
+  }
+
+  .hvl-pretitle {
+    font-size: 8px;
+    letter-spacing: 2px;
+  }
+
+  .hvl-hero-titles h1 {
+    font-size: clamp(30px, 9.5vw, 65px);
+  }
+
+  .hvl-title-cup {
+    font-size: clamp(90px, 23vw, 150px);
+  }
+
+  .hvl-hero-divider b {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+
+  .hvl-hero-description {
+    font-size: 13px;
+  }
+
+  .hvl-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hvl-stats-strip {
+    margin-top: 45px;
+  }
+
+  .hvl-stat {
+    padding: 20px 6px;
+  }
+
+  .hvl-stat span {
+    font-size: 7px;
+    letter-spacing: 0.4px;
+  }
+
+  .hvl-scroll-hint {
+    display: none;
+  }
+
+  .hvl-legacy-section,
+  .hvl-seasons-section {
+    padding: 75px 6%;
+  }
+
+  .hvl-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hvl-seasons-heading {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .hvl-season-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hvl-season-card-v2 {
+    min-height: 380px;
+  }
+
+  .hvl-footer {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY AND REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hvl-site *,
+  .hvl-site *::before,
+  .hvl-site *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+
+/* ======================================
+   HALUVAGILU CUP — RESPONSIVE UPGRADE
+====================================== */
+
+/* Mobile navigation */
+
+.hvl-mobile-menu {
+  display: none;
+  position: relative;
+  z-index: 50;
+}
+
+.hvl-menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-width: 96px;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid rgba(72, 245, 255, 0.45);
+  background: rgba(0, 220, 255, 0.06);
+  color: #48f5ff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+.hvl-menu-toggle:focus-visible {
+  outline: 2px solid #48f5ff;
+  outline-offset: 4px;
+}
+
+.hvl-menu-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 20px;
+  height: 20px;
+}
+
+.hvl-menu-icon span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #48f5ff;
+  border-radius: 2px;
+  transition: transform .25s, opacity .25s;
+}
+
+.hvl-menu-toggle.is-open .hvl-menu-icon span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hvl-menu-toggle.is-open .hvl-menu-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+.hvl-menu-toggle.is-open .hvl-menu-icon span:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.hvl-mobile-panel {
+  position: absolute;
+  top: calc(100% + 16px);
+  right: 0;
+  width: min(290px, calc(100vw - 32px));
+  padding: 10px;
+  border: 1px solid rgba(72, 245, 255, 0.35);
+  background: rgba(3, 12, 20, 0.98);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, .6);
+  backdrop-filter: blur(20px);
+  animation: hvlMobileIn .25s ease both;
+}
+
+.hvl-mobile-panel a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 52px;
+  padding: 13px;
+  border-bottom: 1px solid rgba(72, 245, 255, 0.1);
+  color: #f0fcff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.hvl-mobile-panel a:hover,
+.hvl-mobile-panel a:focus-visible {
+  color: #48f5ff;
+  background: rgba(72, 245, 255, 0.08);
+}
+
+.hvl-mobile-link-number {
+  color: #48f5ff;
+  font-size: 10px;
+}
+
+.hvl-mobile-arrow {
+  margin-left: auto;
+  color: #48f5ff;
+  font-size: 18px;
+}
+
+.hvl-mobile-panel-footer {
+  padding: 16px 10px 8px;
+  color: #8ba7b2;
+  font-size: 9px;
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+
+@keyframes hvlMobileIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================================
+   TABLETS AND SMALL LAPTOPS
+====================================== */
+
+@media (max-width: 950px) {
+  .hvl-links {
+    display: none;
+  }
+
+  .hvl-mobile-menu {
+    display: block;
+  }
+
+  .hvl-nav {
+    padding-inline: 4%;
+  }
+
+  .hvl-hero-content {
+    padding-inline: 5%;
+  }
+
+  .hvl-hero-titles h1 {
+    font-size: clamp(40px, 9vw, 85px);
+  }
+
+  .hvl-light {
+    width: 45vw;
+    opacity: 0.2;
+  }
+
+  .hvl-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hvl-season-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hvl-season-card-v2 {
+    min-height: 380px;
+  }
+}
+
+/* ======================================
+   MOBILE PHONES
+====================================== */
+
+@media (max-width: 600px) {
+
+  /* Navigation */
+
+  .hvl-nav {
+    min-height: 72px;
+    padding: 12px 18px;
+  }
+
+  .hvl-nav-button {
+    display: none;
+  }
+
+  .hvl-brand {
+    gap: 9px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .hvl-brand small {
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .hvl-brand-symbol {
+    width: 36px;
+    height: 36px;
+    font-size: 21px;
+  }
+
+  /* Hero layout */
+
+  .hvl-hero-v2 {
+    min-height: 100svh;
+  }
+
+  .hvl-hero-content {
+    padding: 112px 16px 68px;
+  }
+
+  .hvl-eyebrow {
+    max-width: 100%;
+    gap: 9px;
+    font-size: 8px;
+    letter-spacing: 1.3px;
+  }
+
+  /* Floating trophy */
+
+  .hvl-trophy-stage {
+    width: 160px;
+    height: 160px;
+    margin: 25px auto 25px;
+  }
+
+  .hvl-floating-cup svg {
+    width: 100px;
+    height: 110px;
+  }
+
+  .hvl-ring-outer {
+    inset: 2px;
+  }
+
+  .hvl-ring-inner {
+    inset: 20px;
+  }
+
+  /* Main heading */
+
+  .hvl-pretitle {
+    font-size: 9px;
+    letter-spacing: 2px;
+    line-height: 1.7;
+  }
+
+  .hvl-hero-titles h1 {
+    font-size: clamp(26px, 8.5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.045em;
+  }
+
+  .hvl-title-cup {
+    margin-top: 6px;
+    font-size: clamp(86px, 23vw, 138px);
+    line-height: 1;
+  }
+
+  .hvl-hero-divider {
+    gap: 8px;
+    margin: 18px auto;
+  }
+
+  .hvl-hero-divider b {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .hvl-hero-divider span {
+    width: 25px;
+  }
+
+  .hvl-hero-description {
+    max-width: 360px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  /* Mobile buttons */
+
+  .hvl-hero-actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 360px;
+    margin: 28px auto 0;
+  }
+
+  .hvl-primary-button,
+  .hvl-secondary-button {
+    width: 100%;
+    min-height: 50px;
+    padding: 14px 16px;
+  }
+
+  /* Stats */
+
+  .hvl-stats-strip {
+    width: 100%;
+    max-width: 480px;
+    margin-top: 40px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .hvl-stat {
+    padding: 20px 5px;
+    gap: 8px;
+  }
+
+  .hvl-stat strong {
+    font-size: 29px;
+  }
+
+  .hvl-stat span {
+    font-size: 7px;
+    letter-spacing: 0.3px;
+    line-height: 1.5;
+  }
+
+  /* Section layouts */
+
+  .hvl-legacy-section,
+  .hvl-seasons-section {
+    padding: 70px 18px;
+  }
+
+  .hvl-section-tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .hvl-section-title {
+    font-size: clamp(32px, 8vw, 44px);
+    overflow-wrap: anywhere;
+    line-height: 1.1;
+  }
+
+  .hvl-section-copy {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .hvl-feature-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 35px;
+  }
+
+  .hvl-feature {
+    min-height: auto;
+    padding: 25px;
+  }
+
+  /* Season gallery */
+
+  .hvl-seasons-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .hvl-season-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .hvl-season-card-v2 {
+    min-height: 360px;
+    padding: 22px;
+    background-position: center;
+  }
+
+  .hvl-card-watermark {
+    font-size: 145px;
+  }
+
+  .hvl-card-bottom h3 {
+    font-size: 26px;
+  }
+
+  .hvl-card-bottom h3 span {
+    font-size: 65px;
+  }
+
+  /* Season 7 teaser */
+
+  .hvl-next-section {
+    min-height: 350px;
+    padding: 65px 18px;
+  }
+
+  .hvl-next-section h2 {
+    font-size: clamp(55px, 14vw, 90px);
+  }
+
+  .hvl-next-section h2 span {
+    display: block;
+  }
+
+  .hvl-next-section > strong {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  /* Footer */
+
+  .hvl-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 35px 18px;
+  }
+
+  /* Reduce expensive visual effects */
+
+  .hvl-orb {
+    filter: blur(50px);
+  }
+
+  .hvl-light {
+    filter: blur(35px);
+  }
+
+  .hvl-grid-bg {
+    animation-duration: 30s;
+  }
+
+  .hvl-ticker-track {
+    animation-duration: 50s;
+  }
+
+  .hvl-scroll-hint {
+    display: none;
+  }
+}
+
+/* ======================================
+   EXTRA SMALL PHONES
+====================================== */
+
+@media (max-width: 359px) {
+  .hvl-nav {
+    padding-inline: 12px;
+  }
+
+  .hvl-brand {
+    font-size: 10px;
+    gap: 8px;
+  }
+
+  .hvl-brand small {
+    font-size: 6px;
+    letter-spacing: 1.5px;
+  }
+
+  .hvl-menu-toggle {
+    min-width: 75px;
+    padding-inline: 10px;
+  }
+
+  .hvl-hero-titles h1 {
+    font-size: 26px;
+  }
+
+  .hvl-eyebrow-line {
+    display: none;
+  }
+
+  .hvl-stat {
+    padding-inline: 3px;
+  }
+}
+
+/* Touchscreen devices */
+
+@media (hover: none) and (pointer: coarse) {
+  .hvl-season-card-v2:hover,
+  .hvl-feature:hover {
+    transform: none;
+  }
+}
+
+/* Motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .hvl-mobile-panel {
+    animation: none;
+  }
+}
+
+/* =========================================
+   HVL CUP - MOBILE NAVIGATION FIX
+========================================= */
+
+/* Prevent menu positioning issues */
+.hvl-nav {
+  position: relative;
+  z-index: 100;
+}
+
+.hvl-mobile-menu {
+  position: relative;
+  z-index: 110;
+}
+
+/* Mobile + tablet */
+@media (max-width: 950px) {
+  .hvl-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .hvl-brand {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Hide desktop links and Explore button */
+  .hvl-links,
+  .hvl-nav-button {
+    display: none !important;
+  }
+
+  /* Show only hamburger */
+  .hvl-mobile-menu {
+    display: block;
+    position: static;
+    flex-shrink: 0;
+  }
+
+  .hvl-menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    padding: 0;
+    border: 1px solid rgba(72, 245, 255, 0.45);
+    background: rgba(72, 245, 255, 0.05);
+    cursor: pointer;
+  }
+
+  /* Hide MENU / CLOSE text on small screens */
+  .hvl-menu-toggle > span:last-child {
+    display: none;
+  }
+
+  /* Full-width dropdown positioned BELOW header */
+  .hvl-mobile-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: calc(100dvh - 75px);
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+    border: 0;
+    border-top: 1px solid rgba(72, 245, 255, 0.2);
+    background: #030c14;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.65);
+    animation: hvlMobileIn 0.25s ease both;
+  }
+
+  .hvl-mobile-panel a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    min-height: 65px;
+    padding: 15px 10px;
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    white-space: normal;
+    border-bottom: 1px solid rgba(72, 245, 255, 0.13);
+  }
+
+  .hvl-mobile-link-number {
+    flex-shrink: 0;
+    font-size: 11px;
+    color: #48f5ff;
+  }
+
+  .hvl-mobile-arrow {
+    margin-left: auto;
+    font-size: 20px;
+    color: #48f5ff;
+  }
+
+  .hvl-mobile-panel-footer {
+    margin-top: 15px;
+    padding: 15px 10px;
+    font-size: 10px;
+    line-height: 1.8;
+    color: #819fac;
+    letter-spacing: 1px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 359px) {
+  .hvl-nav {
+    padding-inline: 12px;
+  }
+
+  .hvl-brand {
+    font-size: 11px;
+  }
+
+  .hvl-menu-toggle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+
+  .hvl-mobile-panel {
+    padding-inline: 12px;
+  }
+}
+
+/* HALUVAGILU CUP HEADER LOGO */
+/* ROUND HEADER LOGO */
+.hvl-brand-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: transparent;
+  border: 2px solid rgba(72, 245, 255, 0.45);
+  box-shadow: 0 0 14px rgba(72, 245, 255, 0.18);
+}
+
+.hvl-brand-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+ object-fit: contain;
+background: #000;
+  border-radius: 9999px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hvl-brand-symbol {
+    width: 46px;
+    height: 46px;
+  }
 }
