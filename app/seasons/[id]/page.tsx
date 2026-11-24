@@ -3,6 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { seasons, type Team } from "@/data/seasons";
 
+
+export const instant = false;
+
+
 type Props = {
     params: Promise<{ id: string }>;
 };
